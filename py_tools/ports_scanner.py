@@ -22,29 +22,39 @@ target = []
 ip_range = "192.168.0."
 
 queue = Queue.Queue()
+'''
 for i in range(254):
     target.append("%s%s" % (ip_range, (i+1)))
+'''
+target.append("127.0.0.1")
 
 for i in target:
     queue.put(i)
 
 class ScanThread(threading.Thread):
     def run(self):
-        global queue
         ip = queue.get()
+        fp = open("list.txt", "w")
         for p in port:
             s = socket.socket()
             s.settimeout(3)
-            fp = open("list.txt", "wb")
             try:
                 s.connect((ip, int(p)))
-                print "\n----------------------------------------------------------"
+
+            except socket.error as e:
+                print "IP : %s , Port : %d , Close" % (ip, int(p))
+
+            else:
                 print "IP : %s , Port : %d , Open" % (ip, int(p))
-                print "----------------------------------------------------------\n"
-                sp = "IP : %s , Port : %d , Open" % (ip, int(p))
+                fp.write("IP : %s , Open Port : %d\n" % (ip, int(p)))
 
-            expert:
-                print ""
+            s.close()
 
-            
+        fp.close()
+        queue.task_done()
+
+for p in range(len(target)):
+    ScanThread().start()
+print "waiting for thread..."
+
 

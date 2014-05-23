@@ -26,7 +26,7 @@ msg.attach(att1)
 '''  
 #发送邮件  
 smtp = smtplib.SMTP()  
-smtp.connect('smtp.qq.com:587')
+smtp.connect('smtp.qq.com:25')
 smtp.login('2504584104@qq.com', 'k@jusF!8')  
 smtp.sendmail('2504584104@qq.com', 'ouietesting@qq.com', msg.as_string())  
 smtp.quit()  
