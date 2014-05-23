@@ -1,0 +1,186 @@
+
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set go-=m
+set go-=T
+set ru
+set noswapfile
+set nobackup
+"set enc=utf8
+set linespace=3
+map <SPACE> <C-D>
+map <S-SPACE> <C-U>
+
+set tags=tags;
+set autochdir
+
+set helplang=cn
+
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap wm :WMToggle<cr>
+
+set diffexpr=MyDiff()
+function MyDiff()
+	let opt = '-a --binary '
+	if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+	if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+	let arg1 = v:fname_in
+	if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+	let arg2 = v:fname_new
+	if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+	let arg3 = v:fname_out
+	if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+	let eq = ''
+	if $VIMRUNTIME =~ ' '
+		if &sh =~ '\<cmd'
+			let cmd = '""' . $VIMRUNTIME . '\diff"'
+			let eq = '"'
+		else
+			let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+		endif
+	else
+		let cmd = $VIMRUNTIME . '\diff'
+	endif
+	silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+"pydiction 1.2 python auto complete
+filetype plugin on
+let g:pydiction_location = 'D:/Program Files/Vim/vim74/tools/complete-dict'
+"defalut g:pydiction_menu_height == 15
+"let g:pydiction_menu_height = 20
+
+
+"
+" 不同中文编码显示
+" 同时支持GBK和UTF-8编码
+"
+"set fileencoding=gb18030
+"set fileencodings=utf-8,gb18030,utf-16,big5
+set fileencodings=ucs-bom,utf-8,cp936
+set fileencoding=utf-8
+set encoding=cp936 "set encoding=utf-8
+
+"
+" 设置字体
+"
+""set guifont=Source_Code_Pro_常规:h10
+set guifont=Consolas:h10
+
+"
+" 启动最大化, 设置颜色方案
+"
+"winsize 1366 768
+au GUIEnter * simalt ~x
+colorscheme molokai
+
+"
+"自动缩进
+"
+set autoindent
+
+"
+" 设置tab制表符为4个空格
+"
+set ts=4
+set expandtab
+set shiftwidth=4
+set cinoptions=>4,e0,n0,f0,{0,}0,^0,:s,=s,l0,gs,hs,ps,ts,+s,c3,C0,(2s,us,
+			\U0,w0,m0,j0,)20,*30
+"
+" 展开显示文件类型菜单
+"
+let do_syntax_sel_menu = 1 | runtime! synmenu.vim | aunmenu &Syntax.&Show\ filetypes\ in\ menu
+"
+" 备份文件放在指定目录
+"
+set backupdir=D:\tmp
+
+"
+" 没有警告音和视觉警告
+"
+set vb t_vb=0
+
+"
+" 禁用swf交换文件
+"
+setlocal noswapfile
+
+"
+" 显示行号
+"
+set number
+
+"
+" 隐藏工具条
+"
+" see :help 'guioptions'
+"
+"set guioptions-=T
+"set guioptions-=m
+
+"
+" 状态条，显示字节数，列数，行数，当前行等信息
+"
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set laststatus=2 " always show the status line
+
+
+" 在处理未保存或只读文件的时候，弹出确认
+set confirm
+
+" 与windows共享剪贴板 
+set clipboard+=unnamed 
+
+" 语法高亮
+syntax enable
+syntax on
+
+" 启动的时候不显示那个援助索马里儿童的提示
+set shortmess=atI
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 搜索和匹配
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 高亮显示匹配的括号
+set showmatch
+
+" 匹配括号高亮的时间（单位是十分之一秒）
+set matchtime=5
+
+" 在搜索的时候忽略大小写
+set ignorecase
+
+" 不要高亮被搜索的句子（phrases）
+"set nohlsearch
+
+" 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
+"set incsearch
+
+" 光标移动到buffer的顶部和底部时保持3行距离
+set scrolloff=3
+
+" 不要闪烁
+set novisualbell
+
+" 总是显示状态行
+set laststatus=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文本格式和排版
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 继承前一行的缩进方式，特别适用于多行注释
+set autoindent
+
+" 为C程序提供自动缩进
+set smartindent
+
+" 使用C样式的缩进
+set cindent
+
+
+ 
