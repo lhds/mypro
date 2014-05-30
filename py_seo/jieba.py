@@ -1,4 +1,7 @@
 # coding=utf-8
+
+#process the text files by using jieba,a Python Chinese word segmentation module
+
 import sys
 reload(sys) 
 sys.setdefaultencoding('utf-8')
