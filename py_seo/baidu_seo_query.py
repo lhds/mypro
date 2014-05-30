@@ -1,7 +1,7 @@
 #coding=utf-8
   
 import requests
-import BeautifulSoup
+from bs4 import BeautifulSoup
 import re
 import random
   
@@ -34,7 +34,7 @@ def getContent(baiduURL):   #get the content of the serp
     '80.243.185.168:1177',
     '218.108.85.59:81']
     proxies = {'http': 'http://%s' % random.choice(ipList)}
-    r = requests.get(baiduURL, headers = headers)#, proxies = proxies)
+    r = requests.get(baiduURL, headers = headers, proxies = {'http' : 'http://127.0.0.1:8888'})#, proxies = proxies)
     return r.content
   
 def getLastURL(rawurl): #get final URL while there're redirects
@@ -58,11 +58,11 @@ def getRank(checkWord, domain): #main line
     checkWord = decodeAnyWord(checkWord)
     baiduURL = createURL(checkWord)
     cont = getContent(baiduURL)
-    soup = BeautifulSoup.BeautifulSoup(cont)
-    results = soup.findAll('table', {'class': 'result'})    #find all results in this page
+    soup = BeautifulSoup(cont)
+    results = soup.findAll('table', {'class': 'result'})    #########################################need to change!
     for result in results:
         checkData = unicode(result.find('span', {'class': 'g'}))
-        if re.compile(r'^[^/]*%s.*?' %domain).match(checkData): #∏ƒ’˝‘Ú
+        if re.compile(r'^[^/]*%s.*?' %domain).match(checkData): ####################################need to change!
             nowRank = result['id']  #get the rank if match the domain info
   
             resLink = result.find('h3').a
@@ -73,7 +73,7 @@ def getRank(checkWord, domain): #main line
             rescache = result.find('span', {'class': 'g'})
             cacheDate = getCacheDate(unicode(rescache)) #get the cache date of the target page
   
-            res = u'%s, µ⁄%s√˚, %s, %s, %s' % (checkWord, nowRank, resTitle, cacheDate, domainURL)
+            res = u'%s, Á¨¨%sÂêç, %s, %s, %s' % (checkWord, nowRank, resTitle, cacheDate, domainURL)
             return res.encode('gb2312')
             break
     else:
