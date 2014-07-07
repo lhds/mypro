@@ -1,5 +1,9 @@
+#coding : utf-8 
 #send email using SMTP
-#coding=utf-8 
+#
+#
+#
+
 import smtplib, mimetypes, time
 from email.mime.text import MIMEText  
 from email.mime.multipart import MIMEMultipart  
